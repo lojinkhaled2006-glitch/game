@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://djf7keuxeyyoh"]
+
+[ext_resource type="Script" uid="uid://cfflkg274fdta" path="res://ui.gd" id="1_fyqef"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m6e0p"]
+bg_color = Color(0.5802414, 0.035204276, 0.065669775, 0.972549)
+
+[node name="UI" type="CanvasGroup" unique_id=590852319]
+script = ExtResource("1_fyqef")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1028613761]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 1.0
+offset_right = 1160.0
+offset_bottom = 658.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1003676177]
+layout_mode = 2
+
+[node name="LifesLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1811064998]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 35
+text = "Lifes:3"
+
+[node name="GameOverContainer" type="CenterContainer" parent="." unique_id=211774029]
+unique_name_in_owner = true
+visible = false
+top_level = true
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 152.0
+
+[node name="Panel" type="Panel" parent="GameOverContainer" unique_id=1906106295]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_m6e0p")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverContainer/Panel" unique_id=21444477]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="GameOverContainer/Panel/VBoxContainer" unique_id=832430146]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "YOU HAVE LOST "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameLostButton" type="Button" parent="GameOverContainer/Panel/VBoxContainer" unique_id=677456473]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "RESTART GAME"
+
+[connection signal="pressed" from="GameOverContainer/Panel/VBoxContainer/GameLostButton" to="." method="_on_game_lost_button_pressed"]

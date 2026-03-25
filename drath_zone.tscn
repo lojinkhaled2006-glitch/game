@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://f7se43j2cuan"]
+
+[ext_resource type="Script" uid="uid://bvyql4rufc6oa" path="res://drath_zone.gd" id="1_subij"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_37mak"]
+size = Vector2(1164, 20)
+
+[node name="DeathZone" type="Area2D" unique_id=676606273]
+script = ExtResource("1_subij")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=987660177]
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_37mak")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
