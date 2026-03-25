@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://cod53i4ndk1ss"]
+
+[ext_resource type="Texture2D" uid="uid://o71gehl773ig" path="res://png/paddleBlu.png" id="1_3xiby"]
+
+[sub_resource type="GDScript" id="GDScript_mo4dg"]
+script/source = "extends CharacterBody2D
+class_name PlayerPaddle
+
+var direction = 0
+var camera_rect: Rect2
+var half_paddle_width: float
+var is_ball_started = false 
+
+@export var speed = 400
+@export var camera: Camera2D
+
+@onready var ball = $\"../Ball\" 
+@onready var collision_shape_2d = $CollisionShape2D
+
+func _ready():
+	ball.life_lost.connect(on_ball_lost)
+	camera_rect = camera.get_viewport_rect()
+	half_paddle_width = collision_shape_2d.shape.get_rect().size.x / 2 * scale.x
+
+func _process(delta):
+	if Input.is_action_pressed(\"left\"):
+		direction = -1
+	elif Input.is_action_pressed(\"right\"):
+		direction = 1
+	else:
+		direction = 0
+
+	# نحرك البادل بإيدنا
+	global_position.x += direction * speed * delta
+
+	var camera_start_x = camera.position.x - camera_rect.size.x / 2
+	var camera_end_x = camera_start_x + camera_rect.size.x
+	
+	if global_position.x - half_paddle_width < camera_start_x:
+		global_position.x = camera_start_x + half_paddle_width
+	elif global_position.x + half_paddle_width > camera_end_x:
+		global_position.x = camera_end_x - half_paddle_width
+
+	if direction != 0 and !is_ball_started:
+		ball.start_ball()
+		is_ball_started = true
+
+func on_ball_lost():
+	is_ball_started = false
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y7wee"]
+size = Vector2(131, 32)
+
+[node name="Paddle" type="CharacterBody2D" unique_id=341607629]
+script = SubResource("GDScript_mo4dg")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=195048164]
+texture = ExtResource("1_3xiby")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=587350456]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_y7wee")
