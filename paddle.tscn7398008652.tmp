@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://cod53i4ndk1ss"]
+
+[ext_resource type="Texture2D" uid="uid://o71gehl773ig" path="res://png/paddleBlu.png" id="1_3xiby"]
+
+[sub_resource type="GDScript" id="GDScript_mo4dg"]
+script/source = "extends RigidBody2D
+
+class_name Paddle
+
+var direction = Vector2.ZERO
+
+@export var speed = 200
+@export var camera: Camera2D
+
+@onready var collision_shape_2d = $CollisionShape2D
+
+func _physics_process(delta):
+ linear_velocity = speed * direction
+
+func _input(event):
+ if Input.is_action_pressed(\"left\"):
+  direction = Vector2.LEFT
+ elif Input.is_action_pressed(\"right\"):
+  direction = Vector2.RIGHT
+ else:
+  direction = Vector2.ZERO
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y7wee"]
+size = Vector2(131, 32)
+
+[node name="Paddle" type="RigidBody2D" unique_id=1492462006]
+gravity_scale = 0.0
+script = SubResource("GDScript_mo4dg")
+speed = null
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=195048164]
+texture = ExtResource("1_3xiby")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=587350456]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_y7wee")
